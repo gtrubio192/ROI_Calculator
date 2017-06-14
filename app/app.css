@@ -23,3 +23,31 @@
   content: "|";
   padding-right: 0.3em;
 }
+
+.table td.td-addButton {
+  vertical-align: bottom;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table>tbody>tr>td {
+  padding: 5px;
+}
+
+.panel-warning>.panel-heading {
+  background-color: #ec971f;
+}
+
+.panel-body {
+  padding: 0;
+}
+
+small {
+  display: block;
+}
+
+.error {
+  color: red;
+}

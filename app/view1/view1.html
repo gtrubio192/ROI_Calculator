@@ -6,99 +6,188 @@
     </div>
 </nav>
 <div id="app-container" ng-controller="RoiCtrl">       
-    <div class="col-md-6">
-        <form class="" ng-submit="add('revenue')">
-            <table class="table table-striped">
-                <thead>
-                    <th>Item Name </th>
-                    <th>One Time Cost </th>
-                    <th>Monthly Cost </th>
-                    <th></th>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in revenueItems">
-                        <td>
-                            <span>{{item.itemName}}</span>
-                        </td>
-                        <td>
-                            <span>{{item.oneTimeValue | currency }}</span>
-                        </td>
-                        <td>
-                            <span>{{item.monthlyValue | currency }}</span>
-                        </td>
-                        <td>
-                            <!--<button class="btn-danger" ng-click="revenueItems.splice($index,1)">Delete</button>-->
-                             <button class="btn-danger" ng-click="deleteEntry($index, 'revenue', $event)">Delete</button> 
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                            <td>
-                                <input type="text" ng-model="itemName" 
-                                        placeholder="Item Name">
-                            </td>
-                            <td>
-                                <input type="text" ng-model="oneTimeValue" 
-                                        placeholder="One-Time">
-                            </td>
-                            <td>
-                                <input type="text" ng-model="monthlyValue"
-                                        placeholder="Monthly">
-                            </td>
-                            <td>
-                                <input class="btn-primary" type="submit" value="Add Revenue Item">
-                            </td>
-                    </tr>                
-                </tbody> 
-            </table>
-        </form>
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Revenue</h3>
+            </div>
+            <div class="panel-body">
+                <form ng-submit="add('revenue')">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Item Name </th>
+                            <th>One Time Cost </th>
+                            <th>Monthly Cost </th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in revenueItems">
+                                <td>
+                                    <span>{{item.itemName}}</span>
+                                </td>
+                                <td>
+                                    <span>{{item.oneTimeValue | currency }}</span>
+                                </td>
+                                <td>
+                                    <span>{{item.monthlyValue | currency }}</span>
+                                </td>
+                                <td>
+                                    <!--<button class="btn-danger" ng-click="revenueItems.splice($index,1)">Delete</button>-->
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEntry($index, revenueItems)">Delete</button> 
+                                </td>
+                            </tr>                      
+                            <tr>
+                                <td>
+                                    <span><small>Item Name</small></span>
+                                    <input type="text" ng-model="itemName">
+                                    
+                                </td>
+                                <td>
+                                    <span><small>One Time</small></span>
+                                    <input type="number" ng-model="oneTimeValue">
+                                    <span class="error" ng-show="error"><small>Please enter a number</small></span>
+                                </td>
+                                <td>
+                                    <span><small>Monthly</small></span>
+                                    <input type="number" ng-model="monthlyValue">
+                                    <span class="error" ng-show="true"><small>Please enter a number</small></span>
+                                </td>
+                                <td class="td-addButton">
+                                    <input class="btn btn-primary btn-xs" type="submit" value="Add Revenue Item">
+                                </td>
+                            </tr>                
+                        </tbody> 
+                    </table>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Expenses</h3>
+            </div>
+            <div class="panel-body">
+                <form ng-submit="add('expense')">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Item Name </th>
+                            <th>One Time Cost </th>
+                            <th>Monthly Cost </th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in expenseItems">
+                                <td>
+                                    <span>{{item.itemName}}</span>
+                                </td>
+                                <td>
+                                    <span>{{item.oneTimeValue | currency }}</span>
+                                </td>
+                                <td>
+                                    <span>{{item.monthlyValue | currency }}</span>
+                                </td>
+                                <td>
+                                    <!--<button class="btn-danger" ng-click="expenseItems.splice($index,1)">Delete</button>-->
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEntry($index, expenseItems);">Delete</button> 
+                                </td>
+                            </tr>       
+                            <tr>
+                                <td>
+                                    <span><small>Item Name</small></span>
+                                    <input type="text" ng-model="expenseItemName">
+                                </td>
+                                <td>
+                                    <span><small>One Time</small></span>
+                                    <input type="number" ng-model="expenseOneTimeValue">
+                                </td>
+                                <td>
+                                    <span><small>Monthly</small></span>
+                                    <input type="number" ng-model="expenseMonthlyValue">
+                                </td>
+                                <td class="td-addButton">
+                                    <input class="btn btn-primary btn-xs" type="submit" value="Add Expense Item">
+                                </td>
+                            </tr>                
+                        </tbody> 
+                    </table>
+                </form>
+            </div>
+        </div>
 
-        <form class="" ng-submit="add('expense')">
-            <table class="table table-striped">
-                <thead>
-                    <th>Item Name </th>
-                    <th>One Time Cost </th>
-                    <th>Monthly Cost </th>
-                    <th></th>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in expenseItems">
-                        <td>
-                            <span>{{item.itemName}}</span>
-                        </td>
-                        <td>
-                            <span>{{item.oneTimeValue | currency }}</span>
-                        </td>
-                        <td>
-                            <span>{{item.monthlyValue | currency }}</span>
-                        </td>
-                        <td>
-                            <!--<button class="btn-danger" ng-click="expenseItems.splice($index,1)">Delete</button>-->
-                             <button class="btn-danger" ng-click="deleteEntry($index, 'expense', $event); $event.stopPropagation();">Delete</button> 
-                        </td>
-                    </tr>
-                    
-                    <tr>
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">ROI Breakdown</h3>
+            </div>
+            <div class="panel-body">               
+                <table class="table table-striped">
+                    <thead>
+                        <th></th>
+                        <th>One Time Cost </th>
+                        <th>Monthly Cost </th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody>
+                        <tr>
                             <td>
-                                <input type="text" ng-model="expenseItemName" 
-                                        placeholder="Item Name">
+                                <span>Revenue</span>
+                            </td>
+                            <td>$666.00</td>
+                            <td>$666.00</td>
+                            <td>$666.00</td>
+                        </tr>    
+                        <tr>
+                            <td>
+                                <span>Expenses</span>
+                            </td>
+                            <td>$666.00</td>
+                            <td>$666.00</td>
+                            <td>$666.00</td>
+                        </tr>                  
+                        <tr>
+                            <td>
+                                <strong>Contribution Profit</strong>
                             </td>
                             <td>
-                                <input type="text" ng-model="expenseOneTimeValue" 
-                                        placeholder="One-Time">
+                                
                             </td>
                             <td>
-                                <input type="text" ng-model="expenseMonthlyValue"
-                                        placeholder="Monthly">
+                                $888.00
                             </td>
                             <td>
-                                <input class="btn-primary" type="submit" value="Add Expense Item">
+                                $666
                             </td>
-                    </tr>                
-                </tbody> 
-            </table>
-        </form>
-
+                        </tr> 
+                        <tr>
+                            <td>
+                                <strong>Contribution Margin</strong>
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                $999
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td>
+                                <strong>Capital ROI (Months)</strong>
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <td>
+                                $777
+                            </td>
+                        </tr>             
+                    </tbody> 
+                </table>
+            </div>
+        </div>
 
     </div>
 </div>
