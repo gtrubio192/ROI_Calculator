@@ -45,19 +45,16 @@ angular.module('myApp.roiApp', ['ngRoute'])
 
   $scope.add = function(revenue) {
     if (revenue == 'revenue') {
-      // add number validation function
-      // if ($scope.verifyNumbers($scope.oneTimeValue, $scope.monthlyValue)) {
-        $scope.revenueItems.push({
-          itemName: $scope.itemName,
-          oneTimeValue: $scope.oneTimeValue,
-          monthlyValue: $scope.monthlyValue
-        });
-      
-        $scope.itemName = "";
-        $scope.oneTimeValue = "";
-        $scope.monthlyValue = "";
-      }
-    // }
+      $scope.revenueItems.push({
+        itemName: $scope.itemName,
+        oneTimeValue: $scope.oneTimeValue,
+        monthlyValue: $scope.monthlyValue
+      });
+    
+      $scope.itemName = "";
+      $scope.oneTimeValue = "";
+      $scope.monthlyValue = "";
+    }
     else {
         $scope.expenseItems.push({
         itemName: $scope.expenseItemName,
@@ -72,10 +69,6 @@ angular.module('myApp.roiApp', ['ngRoute'])
     $scope.calculateRoi();
   };
 
-  // Finish or throw away
-  $scope.verifyNumbers = function(oneTimeValue, monthlyValue) {
-    return angular.isNumber(oneTimeValue)
-  }
   // One-Time Revenue = Sum of the one-time column of all revenue items
   // Monthly Revenue = Sum of the monthly column of all revenue items
   // One-Time Expense = Sum of the one-time column of all expense items
