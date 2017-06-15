@@ -13,12 +13,16 @@ angular.module('myApp.roiApp', ['ngRoute'])
   $scope.revenueItems = [
     {
       itemName: "Investor Anon",
-      oneTimeValue: 500,
+      oneTimeValue: 100,
       monthlyValue: 50
     }, {
       itemName: "Investor Transparent",
-      oneTimeValue: 200,
-      monthlyValue: 20
+      oneTimeValue: 50,
+      monthlyValue: 25
+    }, {
+      itemName: "Investor X",
+      oneTimeValue: 25,
+      monthlyValue: 85
     }
   ];
 
@@ -26,11 +30,11 @@ angular.module('myApp.roiApp', ['ngRoute'])
     {
       itemName: "Expense X",
       oneTimeValue: 500,
-      monthlyValue: 50
+      monthlyValue: 20
     }, {
       itemName: "Expense Y",
-      oneTimeValue: 100,
-      monthlyValue: 10
+      oneTimeValue: 200,
+      monthlyValue: 40
     }
   ];
 
@@ -86,15 +90,15 @@ angular.module('myApp.roiApp', ['ngRoute'])
   $scope.calculateRoi = function() {
     $scope.revenueOneTimeTotal = $scope.adder($scope.revenueItems, 'once');
     $scope.revenueMonthlyTotal = $scope.adder($scope.revenueItems, 'monthly');
-    $scope.revenueTotal = ($scope.revenueOneTimeTotal + $scope.revenueMonthlyTotal)*12;
+    $scope.revenueTotal = $scope.revenueOneTimeTotal + $scope.revenueMonthlyTotal*12;
 
     $scope.expenseOneTimeTotal = $scope.adder($scope.expenseItems, 'once');
     $scope.expenseMonthlyTotal = $scope.adder($scope.expenseItems, 'monthly');
-    $scope.expenseTotal = ($scope.expenseOneTimeTotal + $scope.expenseMonthlyTotal)*12;
+    $scope.expenseTotal = $scope.expenseOneTimeTotal + $scope.expenseMonthlyTotal*12;
 
     $scope.contributionProfitMonthly = $scope.revenueMonthlyTotal - $scope.expenseMonthlyTotal;
     $scope.contributionProfitTotal = $scope.revenueTotal - $scope.expenseTotal;
-    $scope.contributionMargin = $scope.contributionProfitTotal/$scope.revenueTotal;
+    $scope.contributionMargin = ($scope.contributionProfitTotal/$scope.revenueTotal)*100;
     $scope.capitalRoi = ($scope.expenseOneTimeTotal - $scope.revenueOneTimeTotal ) / $scope.contributionProfitMonthly;
   }
 
@@ -120,6 +124,7 @@ angular.module('myApp.roiApp', ['ngRoute'])
 // Discuss: inline click event vs. built out function in controller
   $scope.deleteEntry = function(index, roiArray) {    
     roiArray.splice(index, 1);
+    $scope.calculateRoi();
   };
 
   $scope.calculateRoi();
