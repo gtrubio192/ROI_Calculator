@@ -13,26 +13,31 @@ angular.module('myApp.roiApp', ['ngRoute'])
   $scope.revenueItems = [
     {
       itemName: "Investor Anon",
-      oneTimeValue: 666,
-      monthlyValue: 66
+      oneTimeValue: 500,
+      monthlyValue: 50
     }, {
       itemName: "Investor Transparent",
-      oneTimeValue: 800,
-      monthlyValue: 77
+      oneTimeValue: 200,
+      monthlyValue: 20
     }
   ];
 
   $scope.expenseItems  = [
     {
       itemName: "Expense X",
-      oneTimeValue: 97900,
-      monthlyValue: 666
+      oneTimeValue: 500,
+      monthlyValue: 50
     }, {
       itemName: "Expense Y",
-      oneTimeValue: 79700,
-      monthlyValue: 770
+      oneTimeValue: 100,
+      monthlyValue: 10
     }
   ];
+
+  $scope.revenueOneTimeTotal = 0;
+  $scope.revenueMonthlyTotal = 0;
+  $scope.expenseOneTimeTotal = 0;
+  $scope.expenseMonthlyTotal = 0;
 
   $scope.add = function(revenue) {
     if (revenue == 'revenue') {
@@ -63,12 +68,49 @@ angular.module('myApp.roiApp', ['ngRoute'])
     $scope.calculateRoi();
   };
 
+  // Finish or throw away
   $scope.verifyNumbers = function(oneTimeValue, monthlyValue) {
-    return isNaN(oneTimeValue) 
+    return angular.isNumber(oneTimeValue)
+  }
+  // One-Time Revenue = Sum of the one-time column of all revenue items
+  // Monthly Revenue = Sum of the monthly column of all revenue items
+  // One-Time Expense = Sum of the one-time column of all expense items
+  // Monthly Expense = Sum of the monthly column of all expense items
+  
+  // Total Revenue = One-Time Revenue + Monthly Revenue * 12
+  // Total Expenses = One-Time Expense + Monthly Expenses * 12
+  // Monthly Contribution Profit = Monthly Revenue – Monthly Expenses
+  // Total Contribution Profit = Total Revenue – Total Expenses
+  // Contribution Margin = Total Contribution Profit / Total Revenue
+  // Capital ROI (Months) = (One-Time Expenses – One-Time Revenue) / Monthly Contribution Profit
+  $scope.calculateRoi = function() {
+    $scope.revenueOneTimeTotal = $scope.adder($scope.revenueItems, 'once');
+    $scope.revenueMonthlyTotal = $scope.adder($scope.revenueItems, 'monthly');
+    $scope.revenueTotal = ($scope.revenueOneTimeTotal + $scope.revenueMonthlyTotal)*12;
+
+    $scope.expenseOneTimeTotal = $scope.adder($scope.expenseItems, 'once');
+    $scope.expenseMonthlyTotal = $scope.adder($scope.expenseItems, 'monthly');
+    $scope.expenseTotal = ($scope.expenseOneTimeTotal + $scope.expenseMonthlyTotal)*12;
+
+    $scope.contributionProfitMonthly = $scope.revenueMonthlyTotal - $scope.expenseMonthlyTotal;
+    $scope.contributionProfitTotal = $scope.revenueTotal - $scope.expenseTotal;
+    $scope.contributionMargin = $scope.contributionProfitTotal/$scope.revenueTotal;
+    $scope.capitalRoi = ($scope.expenseOneTimeTotal - $scope.revenueOneTimeTotal ) / $scope.contributionProfitMonthly;
   }
 
-  $scope.calculateRoi = function() {
-    alert('we did it!');
+  $scope.adder = function(array, key) {
+    var total = 0;
+    if (key == 'once') {
+      angular.forEach(array, function(item) {
+        return total += item.oneTimeValue;
+      });
+    }
+    else {
+      angular.forEach(array, function(item) {
+        return total += item.monthlyValue;
+      });
+    }
+    return total;
   }
 
 // BUG: deleteEntry() gets triggered when you hit ENTER key when filling out a new entry
@@ -79,5 +121,7 @@ angular.module('myApp.roiApp', ['ngRoute'])
   $scope.deleteEntry = function(index, roiArray) {    
     roiArray.splice(index, 1);
   };
+
+  $scope.calculateRoi();
 
 });
