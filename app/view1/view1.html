@@ -205,7 +205,7 @@
             <div class="thumbnail revenue"> 
                 <h3>Revenue</h3>
                 <form ng-submit="add('revenue')">
-                        <table class="table table-striped">
+                        <table class="table table-striped swing-side">
                             <thead>
                                 <th>Item </th>
                                 <th>One Time Cost </th>
@@ -214,23 +214,6 @@
                             </thead>
                             <tbody>
                                 <!--TODO: Build in filter for ascend/descending values-->
-                                <tr ng-repeat="item in revenueItems">
-                                    <td>
-                                        <span>{{item.itemName}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{item.oneTimeValue | currency }}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{item.monthlyValue | currency }}</span>
-                                    </td>
-                                    <td>
-                                        <!--<button class="btn-danger" ng-click="revenueItems.splice($index,1)">Delete</button>-->
-                                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEntry($index, revenueItems)">
-                                            <span class="glyphicon glyphicon-remove-sign"></span>
-                                        </button> 
-                                    </td>
-                                </tr>                      
                                 <tr>
                                     <td>
                                         <span><small>Item Name</small></span>
@@ -252,39 +235,57 @@
                                             <span class="glyphicon glyphicon-plus-sign"></span>
                                         </button>
                                     </td>
-                                </tr>                
+                                </tr>
+                                <tr ng-repeat="item in revenueItems">
+                                    <td>
+                                        <div>{{item.itemName}}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{item.oneTimeValue | currency }}</div>
+                                    </td>
+                                    <td>
+                                        <div>{{item.monthlyValue | currency }}</div>
+                                    </td>
+                                    <td>
+                                        <!--<button class="btn-danger" ng-click="revenueItems.splice($index,1)">Delete</button>-->
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEntry($index, revenueItems)">
+                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                        </button> 
+                                    </td>
+                                </tr>                                      
                             </tbody> 
                         </table>
                     </form>
             </div>
+<!--start of prototype-->
             <div class="thumbnail expense">
                 <h3>Expenses</h3>
                 <form ng-submit="add('expense')">
                         <table class="table table-striped">
                             <thead>
-                                <th>Item </th>
-                                <th>One Time Cost </th>
-                                <th>Monthly Cost </th>
+                                <th>
+                                    Item                                    
+                                    <span class="glyphicon glyphicon-chevron-down" 
+                                    ng-click="sortBy('itemName');
+                                    flipItem=!flipItem; flipOneTime=flipMonthly=false;"
+                                    ng-class="{flipItem: flipItem}"></span>
+                                </th>
+                                <th>
+                                    One Time Cost 
+                                    <span class="glyphicon glyphicon-chevron-down" 
+                                    ng-click="sortBy('oneTimeValue');
+                                    flipOneTime=!flipOneTime; flipItem=flipMonthly=false;"
+                                    ng-class="{flipOneTime: flipOneTime}"></span>
+                                </th>
+                                <th>Monthly Cost 
+                                    <span class="glyphicon glyphicon-chevron-down" 
+                                    ng-click="sortBy('monthlyValue');
+                                    flipMonthly=!flipMonthly; flipItem=flipOneTime=false"
+                                    ng-class="{flipMonthly: flipMonthly }">
+                                </th>
                                 <th></th>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in expenseItems">
-                                    <td>
-                                        <span>{{item.itemName}}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{item.oneTimeValue | currency }}</span>
-                                    </td>
-                                    <td>
-                                        <span>{{item.monthlyValue | currency }}</span>
-                                    </td>
-                                    <td>
-                                        <!--<button class="btn-danger" ng-click="expenseItems.splice($index,1)">Delete</button>-->
-                                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEntry($index, expenseItems);">
-                                            <span class="glyphicon glyphicon-remove-sign"></span>
-                                        </button> 
-                                    </td>
-                                </tr>       
                                 <tr>
                                     <td>
                                         <span><small>Item Name</small></span>
@@ -304,10 +305,28 @@
                                         </button>
                                     </td>
                                 </tr> 
+                                <tr ng-repeat="item in expenseItems | orderBy:propertyName:reverse">
+                                    <td>
+                                        <span>{{item.itemName}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{item.oneTimeValue | currency }}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{item.monthlyValue | currency }}</span>
+                                    </td>
+                                    <td>
+                                        <!--<button class="btn-danger" ng-click="expenseItems.splice($index,1)">Delete</button>-->
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="deleteEntry($index, expenseItems);">
+                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                        </button> 
+                                    </td>
+                                </tr>       
                             </tbody> 
                         </table>
                     </form>
             </div>
+            <!--end of prototype-->
         </div>
         <div class="col-md-6">
             <div class="thumbnail">

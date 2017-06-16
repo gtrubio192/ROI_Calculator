@@ -120,6 +120,14 @@ angular.module('myApp.roiApp', ['ngRoute'])
     $scope.calculateRoi();
   };
 
+  $scope.propertyName = 'oneTimeValue';
+  $scope.reverse = true;
+
+  $scope.sortBy = function(propertyName, e) {
+    $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+    $scope.propertyName = propertyName;
+  };
+
   $scope.calculateRoi();
 
 });

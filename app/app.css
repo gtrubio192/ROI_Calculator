@@ -32,6 +32,11 @@
   margin-bottom: 0;
 }
 
+tr {
+  visibility: visible;
+  transition: visibility 2s;
+}
+
 .table>tbody>tr>td {
   padding: 5px;
 }
@@ -63,6 +68,11 @@ input {
 
 .jumbotron {
   padding-top: 90px;
+}
+
+.btn {
+  height: 30px;
+  width: 30px;
 }
 
 .table-striped>tbody>tr:nth-of-type(odd) {
@@ -102,4 +112,52 @@ input {
     min-height: 1px;
     min-width: 1px;
     transform: translateX(10px);
+}
+
+/*Item animations*/
+.swing-side {
+  perspective: 200px;
+}
+
+.swing-slide tr {
+  transform: rotateY(-90deg);
+  transition: all 0.5s cubic-bezier(0.36,-0.64,0.34,1.76);
+}
+
+tr {
+  height: 0;
+  overflow: hidden;
+}
+
+.swing-side tr.appear {
+    opacity: 1;
+    transform: none;
+    transition: all 0.5s cubic-bezier(0.36,-0.64,0.34,1.76);
+}
+
+li.appear {
+    height: 2em;
+    border-width: 2px;
+}
+
+.inner-row {
+  max-height: 10px;
+  -webkit-transition: max-height 1.5s cubic-bezier(0, 1.05, 0, 1);
+  -moz-transition: max-height 1.5s cubic-bezier(0, 1.05, 0, 1);
+  transition: max-height 1.5s ease cubic-bezier(0, 1.05, 0, 1);
+  overflow: hidden;
+}
+
+.inner-row:hover {
+  max-height: 300px;
+}
+
+.glyphicon-chevron-down.flipItem:before {
+  content: "\e113";
+}
+.glyphicon-chevron-down.flipOneTime:before {
+  content: "\e113";
+}
+.glyphicon-chevron-down.flipMonthly:before {
+  content: "\e113";
 }
